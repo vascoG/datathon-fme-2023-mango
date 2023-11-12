@@ -28,10 +28,12 @@ if __name__ == '__main__':
     df['des_product_type'] = pd.Categorical(df['des_product_type']).codes
 
 
-    test_product = "53000586-TO"
+    test_product = "57096007-99"
     all_outfits_present = df.loc[df.cod_modelo_color == test_product, 'cod_outfit']
 
     test_product_outfit = df.loc[df.cod_modelo_color == test_product].iloc[0].cod_outfit
+
+    test_product_category = df.loc[df.cod_modelo_color == test_product].iloc[0].des_product_category
 
     test_df = df[df.cod_outfit == test_product_outfit]
     # for outfit in test_df.itertuples():
@@ -90,6 +92,9 @@ if __name__ == '__main__':
         # Get the filename of the image
         product_id = outfit.cod_modelo_color
         product = df.loc[df['cod_modelo_color'] == product_id]    
+
+        if product['des_product_category'].values[0] == test_product_category:
+            continue
 
         image_filename = product['des_filename'].values[0]
         open_image(image_filename)
